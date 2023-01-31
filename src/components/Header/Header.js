@@ -1,13 +1,7 @@
-import React from 'react'
-import Searchbar from './Searchbar/Searchbar'
 import styles from './Header.module.css'
 
-function Header() {
-	return (
-		<header className={`${styles.header} container`}>
-			<Searchbar />
-		</header>
-	)
+function Header(props) {
+	return <header className={`${styles.header}`}>{props.children}</header>
 }
 
 export default Header
