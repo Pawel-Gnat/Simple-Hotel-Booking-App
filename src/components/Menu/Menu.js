@@ -1,27 +1,27 @@
 import style from './Menu.module.css'
-import AuthContext from '../../context/authContext'
-import { useContext } from 'react'
+import useAuth from '../../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 function Menu() {
-	const auth = useContext(AuthContext)
+	const [auth, setAuth] = useAuth()
 
 	const login = e => {
 		e.preventDefault()
-		auth.login()
+		setAuth(true)
 	}
 
 	const logout = e => {
 		e.preventDefault()
-		auth.logout()
+		setAuth(false)
 	}
 
 	return (
 		<div className={`${style.menuContainer}`}>
 			<ul className={style.menu}>
 				<li className={style.menuItem}>
-					<a href='#'>Home</a>
+					<Link to='/'>Home</Link>
 				</li>
-				{auth.isAuthenticated ? (
+				{auth ? (
 					<li className={style.menuItem}>
 						<a href='#' onClick={logout}>
 							Wyloguj się

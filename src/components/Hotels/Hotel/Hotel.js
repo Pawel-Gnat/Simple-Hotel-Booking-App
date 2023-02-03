@@ -3,6 +3,8 @@ import styles from './Hotel.module.css'
 import hotelImg from '../../../assets/images/hotel.jpg'
 import ThemeContext from '../../../context/themeContext'
 import { useContext } from 'react'
+import useAuth from '../../../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 const propTypes = {
 	name: PropTypes.string.isRequired,
@@ -13,6 +15,11 @@ const propTypes = {
 
 function Hotel(props) {
 	const theme = useContext(ThemeContext)
+	const [auth] = useAuth()
+
+	const clickHandler = e => {
+		props.onOpen(props)
+	}
 
 	return (
 		<div className={`card ${styles.hotel}`}>
@@ -28,17 +35,28 @@ function Hotel(props) {
 								<p className='badge badge-light text-dark'>{props.city}</p>
 							</div>
 							<div className='col text-end'>
-								<p>
+								<h5>
 									Ocena: <span className='badge bg-secondary'>{props.rating}</span>
-								</p>
-								<a href='#' className={`btn btn-${theme.color} mt-2 px-5 float-end`}>
+								</h5>
+								<Link
+									to={`/hotele/${props.id}`}
+									onClick={clickHandler}
+									className={`btn btn-${theme.color} mt-2 px-5 float-end`}>
 									Pokaż
-								</a>
+								</Link>
+								{/* <a href='#' onClick={clickHandler} className={`btn btn-${theme.color} mt-2 px-5 float-end`}>
+									Pokaż
+								</a> */}
 							</div>
 						</div>
 					</div>
 					<div className='col-12'>
 						<p className={styles.description}>{props.description}</p>
+						{auth ? (
+							<p className='mt-2'>Dostępność: 4 pokoje</p>
+						) : (
+							<p className='mt-2'>Dostępność: wymagane zalogowanie</p>
+						)}
 					</div>
 				</div>
 			</div>
