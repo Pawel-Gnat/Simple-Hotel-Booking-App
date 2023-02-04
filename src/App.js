@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useReducer, useState } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useReducer, lazy, Suspense } from 'react'
+import { HashRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
@@ -15,49 +15,36 @@ import InspiringQuote from './components/InspiringQuote/InspiringQuote'
 import { reducer, initialState } from './reducer'
 import Home from './pages/Home/Home'
 import Hotel from './pages/Hotel/Hotel'
-
-const backendHotels = [
-	{
-		id: 1,
-		name: 'Pod akacjami',
-		city: 'Warszawa',
-		rating: 8.3,
-		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non mattis augue. Donec id mauris scelerisque, scelerisque odio id, porttitor nunc.',
-		image: '',
-	},
-	{
-		id: 2,
-		name: 'Dębowy',
-		city: 'Lublin',
-		rating: 8.8,
-		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non mattis augue. Donec id mauris scelerisque, scelerisque odio id, porttitor nunc.',
-		image: '',
-	},
-]
+import Search from './pages/Search/Search'
+import NotFound from './pages/404/404'
+import Login from './pages/Auth/Login'
+import ErrorBoundary from './hoc/ErrorBoundary'
+const Profile = lazy(() => import('./pages/Profile/Profile'))
 
 function App() {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
-	const searchHandler = term => {
-		const newHotels = [...backendHotels].filter(x => x.city.toLowerCase().includes(term.toLowerCase()))
-		dispatch({ type: 'set-hotels', hotels: newHotels })
-	}
-
 	const header = (
 		<Header>
 			<InspiringQuote />
-			<Searchbar onSearch={searchHandler} />
+			<Searchbar />
 			<ThemeButton />
 		</Header>
 	)
 	const menu = <Menu />
 	const content = (
-		<Routes>
-			<Route path='/' element={<Home />} />
-			<Route path='/hotele/:id' element={<Hotel />} />
-		</Routes>
+		<div>
+			<Suspense fallback={<p>Ładowanie...</p>}>
+				<Routes>
+					<Route path='/' end element={<Home />} />
+					<Route path='/wyszukaj/:term?' element={<Search />} />
+					<Route path='/hotele/:id' element={<Hotel />} />
+					<Route path='/profil' element={state.isAuthenticated ? <Profile /> : <Navigate to='/zaloguj' />} />
+					<Route path='/zaloguj' element={<Login />} />
+					<Route path='*' element={<NotFound />} />
+				</Routes>
+			</Suspense>
+		</div>
 	)
 
 	const footer = <Footer />
@@ -72,7 +59,9 @@ function App() {
 				}}>
 				<ThemeContext.Provider value={{ color: state.theme, changeTheme: () => dispatch({ type: 'change-theme' }) }}>
 					<ReducerContext.Provider value={{ state: state, dispatch: dispatch }}>
-						<Layout header={header} menu={menu} content={content} footer={footer} />
+						<ErrorBoundary>
+							<Layout header={header} menu={menu} content={content} footer={footer} />
+						</ErrorBoundary>
 					</ReducerContext.Provider>
 				</ThemeContext.Provider>
 			</AuthContext.Provider>

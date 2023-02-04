@@ -12,6 +12,7 @@
 .menuItem a {
 	color: gray;
 	margin: 1rem;
+	text-decoration: none;
 }
 
 .menuContainer {
@@ -19,4 +20,8 @@
 	margin: 1rem 0;
 	border: 1px solid gray;
 	background-color: lightgray;
+}
+
+.menuItemActive {
+	font-weight: bold;
 }
