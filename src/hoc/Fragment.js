@@ -1,3 +1,9 @@
-const Fragment = props => props.children
+const Fragment = props => {
+  return (
+    <div className={props.className}>
+      {props.children}
+    </div>
+  );
+};
 
-export default Fragment
+export default Fragment;

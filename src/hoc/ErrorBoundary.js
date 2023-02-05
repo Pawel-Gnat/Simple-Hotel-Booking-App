@@ -1,25 +1,30 @@
-import { Component } from 'react'
+import { Component } from 'react';
 
 class ErrorBoundary extends Component {
-	state = {
-		hasError: false,
-	}
+  state = {
+    hasError: false,
+    error: null
+  };
 
-	static getDerivedStateFromError(error) {
-		return { hasError: true }
-	}
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
 
-	render() {
-		if (this.state.hasError) {
-			return (
-				<div className='alert alert-danger'>
-					<p>Problem ze stroną</p>
-				</div>
-			)
-		}
+  componentDidCatch(error, errrInfo) {
+    // save error log
+  }
 
-		return this.props.children
-	}
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="alert alert-danger">
+          Wystąpił jakiś problem: {this.state.error.message}
+        </div>
+      );
+    }
+    
+    return this.props.children;
+  }
 }
 
-export default ErrorBoundary
+export default ErrorBoundary;

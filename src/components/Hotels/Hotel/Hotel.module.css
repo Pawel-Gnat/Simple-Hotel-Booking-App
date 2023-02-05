@@ -1,17 +1,15 @@
 .hotel {
-	margin-bottom: 1rem;
-	background-color: lightblue;
+  margin-bottom: 20px;
+  background-color: rgb(236 236 236);
 }
-
 .title {
-	font-style: 1.2rem;
-	font-weight: bold;
-	margin-bottom: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0;
 }
-
 .description {
-	font-size: 0.88rem;
-	margin-top: 1rem;
-	color: olive;
-	margin-bottom: 0;
+  color: grey;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  margin-bottom: 0;
 }

@@ -1,7 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export default function useWebsiteTitle(title) {
-	useEffect(() => {
-		document.title = title
-	}, [title])
-}
+  const setTitle = newTitle => {
+    document.title = newTitle;
+  }
+  useEffect(() => {
+    if (title) {
+      setTitle(title);
+    }
+  }, [title]);
+
+  return setTitle; 
+} 

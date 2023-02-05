@@ -1,39 +1,43 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from "react";
 
 const quotes = [
-	'Podróże otwierają umysły i serca do nowych doświadczeń i perspektyw.',
-	'Podróżowanie to sposób na ucieczkę od rzeczywistości i odkrycie samego siebie.',
-	'Nie jest ważne dokąd jedziesz, ale z kim.',
-	'Podróżowanie to jedyny rzecz, którą możesz kupić, która będzie cię bogatsza.',
-	'Nie ma nic bardziej inspirującego niż odkrywanie nowych miejsc i kultur.',
-]
+  'Podróże to jedyna rzecz na którą wydajemy pieniądze, a stajemy się bogatsi.” – Anonim',
+  'Podróżowanie uczy skromności. Widzisz, jak niewiele miejsca zajmujesz w świecie.” –  Gustave Flaubert',
+  'Życie daje każdemu tyle, ile sam ma odwagę sobie wziąć, a ja nie zamierzam zrezygnować z niczego, co mi się należy.” – Jacek Pałkiewicz',
+  'Nie czekaj. Pora nigdy nie będzie idealna.” – Napoleon Hill',
+  'Uwielbiam poczucie bycia anonimowym w mieście, w którym nigdy wcześniej nie byłem.” – Bill Bryson',
+  'Jeśli myślisz, że przygody bywają niebezpieczne, spróbuj rutyny. Ona jest śmiercionośna.”  – Paulo Coelho',
+  'Jeśli naszym przeznaczeniem byłoby być w jednym miejscu, mielibyśmy korzenie zamiast stóp.” – Rachel Wolchin',
+];
 
 const styles = {
-	fontStyle: 'italic',
-	position: 'absolute',
-	top: '0.5rem',
-	left: 0,
-	right: 0,
-	textAlign: 'center',
-	padding: '0 2rem',
-	margin: '0 2rem',
-	backgroundColor: 'rgba(87, 138, 157, 0.8)',
-	color: 'white',
+  position: 'absolute',
+  padding: '10px',
+  top: '10px',
+  left: 0,
+  right: 0,
+  textAlign: 'center',
+  color: '#fff',
+  fontSize: '0.9rem',
+  fontStyle: 'italic',
+};
+
+function InsporingQuote(props) {
+  const [quote, setQuote] = useState('Wczytywanie cytatu...');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // ... pobieranie
+    setLoading(false);
+  }, []);
+
+  useLayoutEffect(() => {
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  }, [loading]);
+
+  return (
+    <p style={styles}>{quote}</p>
+  );
 }
 
-function InspiringQuote(props) {
-	const [quote, setQuote] = useState('Wczytywanie cytatu')
-	const [loading, setLoading] = useState(true)
-
-	useEffect(() => {
-		setLoading(false)
-	}, [])
-
-	useEffect(() => {
-		setQuote(quotes[Math.floor(Math.random() * quotes.length)])
-	}, [loading])
-
-	return <p style={styles}>{quote}</p>
-}
-
-export default InspiringQuote
+export default InsporingQuote;

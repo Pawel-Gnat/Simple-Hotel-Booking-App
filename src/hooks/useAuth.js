@@ -1,20 +1,22 @@
-import { useContext, useDebugValue } from 'react'
-import AuthContext from '../context/authContext'
+import { useContext, useDebugValue } from 'react';
+import AuthContext from '../context/authContext';
 
 export default function useAuth() {
-	const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
 
-	const auth = authContext.isAuthenticated
+  const auth = authContext.isAuthenticated;
 
-	useDebugValue(auth ? 'Zalogowany' : 'Wylogowany')
+  useDebugValue(auth ? 'Zalogowany' : 'Wylogowany');
 
-	const setAuth = value => {
-		if (value) {
-			authContext.login()
-		} else {
-			authContext.logout()
-		}
-	}
+  const setAuth = (value) => {
+    if (value) {
+      // login
+      authContext.login();
+    } else {
+      // logout
+      authContext.logout();
+    }
+  } 
 
-	return [auth, setAuth]
+  return [auth, setAuth];
 }

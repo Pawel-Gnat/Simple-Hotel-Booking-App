@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-const reducerContext = React.createContext({
-	state: {},
-	dispatch: () => {},
-})
+const ReducerContext = React.createContext({
+  state: {},
+  dispatch: () => {},
+});
 
-export default reducerContext
+ReducerContext.displayName = 'ReducerContext';
+
+export default ReducerContext;

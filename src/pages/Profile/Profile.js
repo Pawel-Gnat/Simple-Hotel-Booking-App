@@ -1,57 +1,35 @@
-import ProfileDetails from './ProfileDetails/ProfileDetails'
-import MyHotels from './MyHotels/MyHotels'
-import ProfileContainer from './ProfileContainer/ProfileContainer'
-import { Route, Routes, NavLink, Outlet } from 'react-router-dom'
+import { Switch, Route, NavLink, useRouteMatch } from 'react-router-dom';
+import ProfileDetails from './ProfileDetails/ProfileDetails';
+import MyHotels from './MyHotels/MyHotels';
 
 export default function Profile(props) {
-	// const { path, url } = useRouteMatch()
+  const { path, url } = useRouteMatch();
 
-	// console.log(url)
+  return (
+    <div className="card">
+      <div className="card-header">
+        <h2>Mój profil</h2>
+      </div>
+      <div className="card-body">
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <NavLink className="nav-link" exact to={`${url}`}>Profil</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to={`${url}/hotele`}>Hotele</NavLink>
+          </li>
+        </ul>
 
-	return (
-		<div className='card'>
-			<div className='card-header'>
-				<h2>Moj profil</h2>
-			</div>
-			<div className='card-body'>
-				<ul className='nav nav-tabs'>
-					<li className='nav-item'>
-						{/* <NavLink className='nav-link active' end to={`${url}`}> */}
-						<NavLink className='nav-link active' end to='/profil'>
-							Profil
-						</NavLink>
-					</li>
-					<li className='nav-item'>
-						{/* <NavLink className='nav-link' to={`${url}/hotele`}> */}
-						{/* <NavLink className='nav-link' to='/profil/hotele'> */}
-						<NavLink className='nav-link' to='/profil/hotele'>
-							Hotele
-						</NavLink>
-					</li>
-				</ul>
+        <div className="pt-4">
+          <Switch> 
 
-				{/* <div className='pt-4'> */}
-				{/* <Routes> */}
-				{/* <Route path='' element={<ProfileDetails />} /> */}
-				{/* <Route path='/profil/hotele' element={<MyHotels />} /> */}
+            <Route path={`${path}/hotele`} component={MyHotels} />
+            <Route path={`${path}`} component={ProfileDetails} />
 
-				{/* <Route path='/' element={<Profile />}>
-							<Route path='' element={<ProfileDetails />} />
-							<Route path='hotele' element={<MyHotels />} />
-						</Route> */}
-				{/* </Routes> */}
-				{/* <Outlet /> */}
-				{/* </div> */}
+          </Switch>
+        </div>
 
-				<ProfileContainer />
-
-				<Routes>
-					<Route path='profil' element={<ProfileContainer />}>
-						<Route path='' element={<ProfileDetails />} />
-						<Route path='hotele' element={<MyHotels />} />
-					</Route>
-				</Routes>
-			</div>
-		</div>
-	)
+      </div>
+    </div>
+  );
 }

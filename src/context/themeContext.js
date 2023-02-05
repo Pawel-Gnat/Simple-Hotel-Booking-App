@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const ThemeContext = React.createContext({
-	color: 'primary',
-	changeTheme: () => {},
-})
+  color: 'primary',
+  changeTheme: () => {}
+});
 
-export default ThemeContext
+ThemeContext.displayName = 'ThemeContext';
+
+export default ThemeContext;

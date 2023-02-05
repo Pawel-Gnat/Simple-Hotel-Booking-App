@@ -1,17 +1,23 @@
-import styles from './Header.module.css'
-import withMousePosition from '../../hoc/withMousePosition'
+import React from 'react';
+import styles from './Header.module.css';
+import withMousePosition from '../../hoc/withMousePosition';
 
 function Header(props) {
-	const paralaxStyles = {
-		transform: `translate(${props.mouseX / 100}px ,${props.mouseY / 100}px)`,
-	}
+  const paralaxStyles = {
+    transform: `translate(
+                  ${props.mouseX / -20}px, 
+                  ${props.mouseY / 120}px
+                )`
+  };
 
-	return (
-		<header className={`${styles.header}`}>
-			<div className={styles.headerImage} style={paralaxStyles}></div>
-			{props.children}
-		</header>
-	)
+  return (
+    <header className={`${styles.header}`}>
+        <div 
+          className={styles.headerImage}
+          style={paralaxStyles}></div>
+        {props.children}
+    </header>
+  );
 }
 
-export default withMousePosition(Header)
+export default withMousePosition(Header);
